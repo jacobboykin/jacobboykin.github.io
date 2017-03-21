@@ -5,7 +5,7 @@ layout: default
     <div class="inner">
         <main class="site-main">
             <article class="post">
-                <header class="entry-header"> 
+                <header class="entry-header">
                     <div class="entry-header-wrap">
                         {% if page.banner_image %}
                         <div class="post-thumbnail">
@@ -25,7 +25,7 @@ layout: default
                     <div class="share-post">
                         <span>Share</span>
                         <a class="fa-twitter" target="_blank" href="https://twitter.com/intent/tweet?text={{ page.title | uri_escape }}&amp;url={{ site.url }}{{ page.url }}"><span class="screen-reader-text">Twitter</span></a>
-                        <a class="fa-facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}&amp;t={{ page.title | uri_escape }}"><span class="screen-reader-text">Facebook</span></a>
+                        <a class="fa-facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}&amp;t={{ page.title | uri_escape }}&amp;picture={{ "/images/posts/" | append: page.banner_image | prepend: site.url }}"><span class="screen-reader-text">Facebook</span></a>
                         <a class="fa-google-plus" target="_blank" href="http://plus.google.com/share?url={{ site.url }}{{ page.url }}"><span class="screen-reader-text">Google+</span></a>
                     </div><!-- .share-post -->
                     {% if page.tags.size > 0 %}
