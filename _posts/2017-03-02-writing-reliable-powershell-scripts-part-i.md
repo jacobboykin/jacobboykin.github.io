@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Writing Reliable PowerShell scripts
+title: Writing Reliable PowerShell Scripts - Part I
 date: 2017-03-02
 banner_image: reliable-powershell.png
 tags: [PowerShell, Windows, IT, Automation]
 ---
 
-Automating tasks with PowerShell is awesome - but when you begin to automate more complex tasks that run on production servers, it's important that your PowerShell scripts do what you expect them to. And if they don't - they should handle themselves appropriately. In this article I'll be discussing a few ways you can write better, more reliable PowerShell scripts.
+Automating tasks with PowerShell is awesome - but when you begin to automate more complex tasks that run on production servers, it's important that your PowerShell scripts do what you expect them to. And if they don't - they should handle themselves appropriately. In this first part of the Writing Reliable PowerShell Scripts series, I'll be discussing a few ways you can write better, more reliable PowerShell scripts.
 
 {% include image_caption.html imageurl="https://raw.githubusercontent.com/jacobboykin/100-days-of-code/master/img/day_7.gif" title="Kermit Hacking" %}
 
@@ -101,16 +101,12 @@ I also added the collection Start-Process cmdlet's return data, grabbing the exi
 <pre><code class="powershell">$exitCode = (Start-Process -FilePath $setupEXE -ArgumentList $arguments -Wait -PassThru).ExitCode
 Write-Host "`nsetup.exe exited with code $exitCode"</code></pre>
 
+Finally, we need to tell PowerShell when to stop logging our session with the **Stop-Transcript** cmdlet. Check out the PowerShell documentation on these cmdlets for more info:
+
+[Start-Transcript](https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.host/start-transcript)
+
+[Stop-Transcript](https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.host/stop-transcript)
+
 ## ErrorActionPreference
 
 ## Try, Catch, Finally
-
-## Send an E-mail!
-
-## ISE Debugging
-
-## PowerShell versions
-
-## Verify Success
-
-<pre><code class="powershell"></code></pre>
