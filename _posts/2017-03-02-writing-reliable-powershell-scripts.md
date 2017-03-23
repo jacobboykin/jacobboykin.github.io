@@ -12,15 +12,16 @@ Automating tasks with PowerShell is awesome - but when you begin to automate mor
 
 We'll be improving upon a script set to run via Task Scheduler each month on a file server that updates a local Office 365 deployment share. We'll start with the basic tasks that need to be completed and make some important adjustments to make this script rock-solid. Here's our initial code, containing only the bare-minimum tasks that need to be completed:
 
-<pre><code class="powershell">$setupEXE = "C:\Apps\Office-365\Source\setup.exe"
-$arguments = "/download C:\Apps\Office-365\Source\Download.xml"
+<pre><code class="powershell"># Point to the setup.exe and specifiy arguments
+$setupEXE = "D:\Apps\Office-365\Source\setup.exe"
+$arguments = "/download D:\Apps\Office-365\Source\Download.xml"
 
 # Delete current office source if it exists
-if (Test-Path "C:\Apps\Office-365\Source\Office") {
-  Remove-Item "C:\Apps\Office-365\Source\Office" -Recurse -Force
+if (Test-Path "D:\Apps\Office-365\Source\Office") {
+  Remove-Item "D:\Apps\Office-365\Source\Office" -Recurse -Force
 }
 
-# Run setup.exe in download mode
+# Run setup.exe in download mode and wait for it to finish
 Start-Process -FilePath $setupEXE -ArgumentList $arguments -Wait</code></pre>
 
 If you're not familiar with Office 365 Click-to-run deployment this might look a bit weird, but for the purposes of this demonstration this is all we're trying to do:
@@ -28,9 +29,77 @@ If you're not familiar with Office 365 Click-to-run deployment this might look a
 2. Delete that folder if it exists
 3. Start a setup.exe application that will download a bunch of files to that folder
 
-Now, this works just fine - but this needs to run **unattended**, on a **schedule** and on a **production** file server. We can make a few simple adjustments to give ourselves some insights into this tasks' performance and give us some peace of mind.
+Now, this works just fine - but this needs to run **unattended**, on a **schedule** and on a **production** file server. If any errors occur, we have almost no insight into what happened. We can make a few simple adjustments to give ourselves some insights into this tasks' performance and give us some peace of mind.
 
 ## Start-Transcript
+We'll begin by adding some logging functionality to our script. [**Start-Transcript**](https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.host/start-transcript) is a handy cmdlet that will log the console output of a PowerShell session. This means that any errors, console logs/writes or user input will be logged to a nice little file that includes some cool details about the session. In this case, I disabled my network connection, causing setup.exe to throw an error since it couldn't reach Microsoft's server's to download Office. Check it out!
+
+```
+**********************
+Windows PowerShell transcript start
+Start time: 20170322231105
+Username: COMPUTERNAME\jacob
+RunAs User: COMPUTERNAME\jacob
+Machine: COMPUTERNAME (Microsoft Windows NT 10.0.14393.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 12376
+PSVersion: 5.1.14393.953
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.14393.953
+BuildVersion: 10.0.14393.953
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is D:\Apps\office-365\updateScript.log
+
+Checking if Office source folder exists...
+
+Running command: D:\Apps\Office-365\Source\setup.exe /download D:\Apps\Office-365\Source\Download.xml
+
+setup.exe exited with code -2147418113
+**********************
+Windows PowerShell transcript end
+End time: 20170322231114
+**********************
+```
+
+And here's our updated code that made this happen:
+
+<pre><code class="powershell">Start-Transcript -Path D:\Apps\office-365\updateScript.log -Verbose -Force
+
+# Point to the setup.exe and specifiy arguments
+$setupEXE = "D:\Apps\Office-365\Source\setup.exe"
+$arguments = "/download D:\Apps\Office-365\Source\Download.xml"
+
+# Delete current Office source if it exists
+$officeSourceDir = "D:\Apps\Office-365\Source\Office"
+Write-Host "`nChecking if Office source folder exists..."
+if (Test-Path $officeSourceDir) {
+  Write-Host "`nOffice source exists at $officeSourceDir. Will delete folder..."
+  Remove-Item $officeSourceDir -Recurse -Force
+}
+
+# Run setup.exe in download mode and wait for it to finish
+Write-Host "`nRunning command: $setupEXE $arguments"
+$exitCode = (Start-Process -FilePath $setupEXE -ArgumentList $arguments -Wait -PassThru).ExitCode
+Write-Host "`nsetup.exe exited with code $exitCode"
+
+Stop-Transcript</code></pre>
+
+Let's go over what we've added here. We can start logging to a file whenever we want. In this case, we want to start logging immediately so we start off with the Start-Transcript cmdlet telling it where to write and to overwrite the file if it may already exist.
+
+<pre><code class="powershell">Start-Transcript -Path D:\Apps\office-365\updateScript.log -Verbose -Force</code></pre>
+
+I've also added a few **Write-Host** cmdlets to log info about what the script is doing to the console and thus the log file. Note that I'm using the newline character at the beginning of each line (**`n**). Without this the log file would just be one messy string of **Write-Hosts**
+
+<pre><code class="powershell">Write-Host "`nRunning command: $setupEXE $arguments"</code></pre>
+
+I also added the collection Start-Process cmdlet's return data, grabbing the exit code of setup.exe. As with most applications, if this is anything but 0, something probably went wrong. Remember to check the documentation of cmdlets and to play with the data they return. This is just a basic example, but cool stuff like this can be super helpful in creating an effective log file.
+
+<pre><code class="powershell">$exitCode = (Start-Process -FilePath $setupEXE -ArgumentList $arguments -Wait -PassThru).ExitCode
+Write-Host "`nsetup.exe exited with code $exitCode"</code></pre>
 
 ## ErrorActionPreference
 
@@ -43,3 +112,5 @@ Now, this works just fine - but this needs to run **unattended**, on a **schedul
 ## PowerShell versions
 
 ## Verify Success
+
+<pre><code class="powershell"></code></pre>
