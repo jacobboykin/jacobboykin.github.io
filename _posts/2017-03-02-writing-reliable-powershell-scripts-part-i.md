@@ -107,6 +107,64 @@ Finally, we need to tell PowerShell when to stop logging our session with the **
 
 [Stop-Transcript](https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.host/stop-transcript)
 
-## ErrorActionPreference
+## Error Action Preference
 
-## Try, Catch, Finally
+During execution, PowerShell will throw terminating and non-terminating errors. Terminating errors will halt script execution completely and are typically caused by syntax errors. Non-terminating errors are not as serious and will allow execution to continue. Examples might include permissions or network connectivity issues. PowerShell actually lets us control the behavior for non-terminating errors using Error Action Preference.
+
+In our script I've added a new line just after **Start-Transcript** which will actually cause PowerShell to write any non-terminating error to the console (the log in our case) and stop execution.
+
+<pre><code class="powershell">Start-Transcript -Path D:\Apps\office-365\updateScript.log -Verbose -Force
+
+$ErrorActionPreference = "Stop"
+
+# Point to the setup.exe and specifiy arguments
+
+...</code></pre>
+
+Pretty simple! There are other values we can assign to this variable as well. PowerShell's documentation explains them succinctly:
+
+>Stop: Displays the error message and stops executing.
+
+>Inquire: Displays the error message and asks you whether you want to continue.
+
+>Continue: Displays the error message and continues (Default) executing.
+
+>Suspend: Automatically suspends a workflow job to allow for further investigation. After investigation, the workflow can be resumed.
+
+>SilentlyContinue: No effect. The error message is not displayed and execution continues without interruption.
+
+While this is cool, there are even more powerful ways for us to handle errors. Get ready for control flow altering Try / Catch statements!
+
+[About Preference Variables (ErrorActionPreference)](https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.core/about/about_preference_variables)
+
+## Try / Catch / Finally
+
+<pre><code>Start-Transcript -Path D:\Apps\office-365\updateScript.log -Verbose -Force
+
+try {
+    $ErrorActionPreference = "Stop"
+
+    # Point to the setup.exe and specifiy arguments
+    $setupEXE = "D:\Apps\Office-365\Source\setup.exe"
+    $arguments = "/download D:\Apps\Office-365\Source\Download.xml"
+
+    # Delete current Office source if it exists
+    $officeSourceDir = "D:\Apps\Office-365\Source\Office"
+    Write-Host "`nChecking if Office source folder exists..."
+    if (Test-Path $officeSourceDir) {
+      Write-Host "`nOffice source exists at $officeSourceDir. Will delete folder..."
+      Remove-Item $officeSourceDir -Recurse -Force
+    }
+
+    # Run setup.exe in download mode and wait for it to finish
+    Write-Host "`nRunning command: $setupEXE $arguments"
+    $exitCode = (Start-Process -FilePath $setupEXE -ArgumentList $arguments -Wait -PassThru).ExitCode
+    Write-Host "`nsetup.exe exited with code $exitCode"
+    }
+catch {
+
+}
+finally {
+    Stop-Transcript
+}
+</code></pre>
