@@ -7,8 +7,6 @@ banner_image: aboutPage.jpg
 
 **Hey!** I'm Jacob - a system administrator, web developer and musician based in Melbourne, Florida. Welcome to my tech blog!
 
-{% include image_caption.html
-  imageurl="https://media.giphy.com/media/CLLCxWvM8ueHe/giphy.gif"
-  title="Andy Fixing a Computer"%}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OeXievNQpss" frameborder="0" allowfullscreen></iframe>
 
 *Thank You for reading!*
