@@ -5,8 +5,10 @@ description: An about page for Jacob Boykin's blog
 banner_image: aboutPage.jpg
 ---
 
-**Hey!** I'm Jacob - a system administrator, web developer and musician based in Melbourne, Florida. Welcome to my tech blog! I use this space to talk about techy things that I think are cool, or wisdom that I've learned that I want to share.
+**Hey!** I'm Jacob - a system administrator, web developer and musician based in Melbourne, Florida. Welcome to my tech blog!
 
-When I'm not learning about the latest tech, I'm making music, playing with my dog or playing video games.
+{% include image_caption.html
+  imageurl="https://media.giphy.com/media/CLLCxWvM8ueHe/giphy.gif"
+  title="Andy Fixing a Computer"%}
 
 *Thank You for reading!*
