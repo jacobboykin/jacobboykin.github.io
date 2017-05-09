@@ -58,22 +58,22 @@ order by SMS_R_System.Name</code></pre>
 {% include image_caption.html
   imageurl="../images/posts/sccm-query-devices-running-windows-10/creatingAQuery_01.png"
   title="Creating A Query 01"%}
-  
+
 3.) Enter the name of the query and select **Edit Query Statement...**.
 
 {% include image_caption.html
   imageurl="../images/posts/sccm-query-devices-running-windows-10/creatingAQuery_02.png"
   title="Creating A Query 02"%}
-  
+
 4.) Click on **Show Query Langauge** to paste in your WQL, or use the **Query Design** interface to create the query.
 
 {% include image_caption.html
   imageurl="../images/posts/sccm-query-devices-running-windows-10/creatingAQuery_03.png"
   title="Creating A Query 03"%}
-  
+
 5.) In the Create Query Wizard select **Next**, **Next** and **Close**. The Wizard will let you know if your WQL syntax is incorrect.
 
-6.) That's it - you should be able to run your query now!
+6.) That's it - you should be able to run your query now! :fire:
 
 {% include image_caption.html
   imageurl="https://media.giphy.com/media/8Ry7iAVwKBQpG/giphy.gif"
