@@ -52,7 +52,7 @@ This code fetches each item in the Dell CCTK directories and writes them to the 
   imageurl="https://jacobboykin.com/images/posts/adding-the-dell-cctk-command-configure-to-litetouchpe/03.png"
   title="Update Deployment Share Wizard"%}
 
-4.) You can check out if this worked out as expected by opening up the .iso and boot.wim in 7zip.
+4.) You can check if this worked out as expected by opening up the .iso and boot.wim in 7zip.
 
 {% include image_caption.html
   imageurl="https://jacobboykin.com/images/posts/adding-the-dell-cctk-command-configure-to-litetouchpe/04.png"
