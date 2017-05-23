@@ -13,12 +13,11 @@
     <link rel="stylesheet" href="{{ site.baseurl }}/css/dracula.css" >
 
     <!-- Twitter Card data -->
-    <meta name="twitter:card" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    <meta name="twitter:card" content="photo">
     <meta name="twitter:site" content="@jboykinmusic">
-    <meta name="twitter:title" content="{{ page.title | uri_escape }}">
+    <meta name="twitter:title" content="{{ page.title }}">
     <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
     <meta name="twitter:creator" content="@jboykinmusic">
-    <!-- Twitter summary card with large image must be at least 280x150px -->
     <meta name="twitter:image:src" content="{{ "/images/posts/" | append: page.banner_image | prepend: site.url }}">
 </head>
 <body>
