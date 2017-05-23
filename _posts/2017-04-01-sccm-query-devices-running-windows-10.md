@@ -27,6 +27,8 @@ where SMS_G_System_OPERATING_SYSTEM.Name like "%Windows 10%"
 and SMS_G_System_OPERATING_SYSTEM.BuildNumber = "15063"
 order by SMS_R_System.Name</code></pre>
 
+<!--more-->
+
 ### All Devices Running v1607 (Anniversary Update)
 
 <pre><code class="sql">select SMS_R_System.Name,

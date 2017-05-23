@@ -8,6 +8,8 @@ tags: [MDT, LiteTouchPE, WinPE, PowerShell, Windows]
 
 Whether you're performing in-place upgrades and need to convert machines from BIOS to UEFI or just want to totally automate your BIOS configuration, you'll need your device manufacturer's tools in your LiteTouchPE images to run in your MDT task sequences. It's pretty simple to add the Dell CCTK (Command &#124; Configure) to your LiteTouchPE images permanently by modifying the MDT template files. Let's begin!
 
+<!--more-->
+
 1.) Download and install the latest Dell Command &#124; Configure (CCTK) on your MDT server. At the time of writing, you can grab this over [here](http://en.community.dell.com/techcenter/enterprise-client/w/wiki/7532.dell-command-configure).
 
 2.) Open up the LiteTouchPE.xml template located at *"C:\Program Files\Microsoft Deployment Toolkit\Templates"*. This template dictates what components and files should be included in any LiteTouchPE images generated in the Deployment Workbench. We'll need to add the necessary Dell CCTK files and HAPI drivers to the **Content** section of this XML file. For more info on how this works, check out [this Michael Niehaus blog post](https://blogs.technet.microsoft.com/mniehaus/2009/07/10/mdt-2010-new-feature-17-customizable-boot-image-process/).
