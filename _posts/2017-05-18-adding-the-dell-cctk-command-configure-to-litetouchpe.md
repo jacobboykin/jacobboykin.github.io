@@ -6,7 +6,7 @@ banner_image: dell-cctk-command-configure.png
 tags: [MDT, LiteTouchPE, WinPE, PowerShell, Windows]
 ---
 
-Whether you're performing in-place upgrades and need to convert machines from BIOS to UEFI or just want to totally automate your BIOS configuration, you'll need your device manufacturer's tools in your LiteTouchPE images to run in your MDT task sequences. It's pretty simple to add the Dell CCTK (Command &#124; Configure) to your LiteTouchPE images permanently by modifying the MDT template files. Let's begin!
+Whether you're performing in-place upgrades and need to convert machines from BIOS to UEFI or just want to totally automate your BIOS configuration, you'll need your device manufacturer's tools in your LiteTouchPE images to run in your MDT task sequences. For your Dell machines, it's pretty simple to add the Dell CCTK (Command &#124; Configure) to your LiteTouchPE images permanently by modifying an MDT template file. Let's begin!
 
 <!--more-->
 
@@ -61,6 +61,16 @@ This code fetches each item in the Dell CCTK directories and writes them to the 
   title="Verify Dell CCTK is in ISO"%}
 
 5.) Now you can add steps to your task sequences to install the HAPI drivers and reference the CCTK! 🔥
+
+{% include image_caption.html
+  imageurl="https://jacobboykin.com/images/posts/adding-the-dell-cctk-command-configure-to-litetouchpe/05.png"
+  title="Editing the LiteTouchPE.xml"%}
+
+If you want to learn more about using the Dell CCTK in your task sequences, check out these excellent resources:
+
+- [Running Dell Command and Configure commands in MDT or SCCM Task Sequences](http://www.dell.com/support/article/us/en/19/SLN299182/running-dell-command-and-configure--formerly-client-configuration-tool-kit--cctk---commands-in-microsoft-deployment-toolkit--mdt--or-system-center-configuration-manager--sccm--task-sequences?lang=EN)
+- [Moving from BIOS to UEFI with MDT 8443](https://blogs.technet.microsoft.com/mniehaus/2017/04/14/moving-from-bios-to-uefi-with-mdt-8443/)
+- [Automating Dell BIOS-UEFI Standards for Windows 10](https://miketerrill.net/2015/08/31/automating-dell-bios-uefi-standards-for-windows-10/)
 
 ### Full LiteTouchPE.xml with CCTK x86 & x64
 
